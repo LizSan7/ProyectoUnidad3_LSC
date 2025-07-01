@@ -18,7 +18,16 @@ public class MainSecurity {
     public SecurityFilterChain doFilterInternal(HttpSecurity http) throws Exception {
         http.csrf(c -> c.disable()).cors(c-> c.configurationSource(corsRegistry()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("api/client/**").permitAll()
+                        .requestMatchers("/api/cede/**").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
