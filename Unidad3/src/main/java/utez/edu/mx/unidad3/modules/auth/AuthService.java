@@ -29,12 +29,11 @@ public class AuthService {
     @Transactional(readOnly = true)
     public APIResponse doLogin(LoginRequestDTO payload){
 
-
         try{
             BeanUser found = userRepository. findByUsername(payload.getUsername()).orElse(null);
             if(found == null) return new APIResponse("Usuario no econtrado", true, HttpStatus.NOT_FOUND);
 
-            if(PasswordEncoder.verifyPassword(payload.getPassword(), found.getPassword()))
+            if(!PasswordEncoder.verifyPassword(payload.getPassword(), found.getPassword()))
                 return new APIResponse("Las contraseñas no coinciden", true, HttpStatus.BAD_REQUEST);
 
             UserDetails ud = udService.loadUserByUsername(found.getUsername());
