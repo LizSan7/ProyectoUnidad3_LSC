@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -106,7 +107,7 @@ public class CedeController {
                     }
             )
     })
-    public ResponseEntity<APIResponse> save(@RequestBody Cede payload){
+    public ResponseEntity<APIResponse> save(@RequestBody @Valid Cede payload){
         APIResponse response = cedeService.save(payload);
         return new ResponseEntity<>(response, response.getStatus());
     }
